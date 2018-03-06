@@ -18,11 +18,13 @@ using namespace std;
 class RShellContainer: public RShellBase {
 	protected:
 	    	string userInput;
-		vector<Command *> Commands;
-		vector<Connector *> Connectors;
+		vector<Command*> Commands;
+		vector<Connector*> Connectors;
 		bool pass;
 	public:
-	    	RShellContainer() { };
+	    	RShellContainer() {
+	    	    
+	    	};
 	    	void parse();
 	    	void getInput(string input);
 		void execute();

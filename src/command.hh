@@ -36,7 +36,7 @@ class Command: public RShellBase {
 		void printArgs();
 		string getInput();
 		vector<string> getArgs();
-		char ** getArr();
+		char** getArr();
 		void passed();
 		void failed();
 		bool getPass();

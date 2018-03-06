@@ -12,45 +12,45 @@
 
 using namespace std;
 
-// sets userInput with input
+
 void RShellContainer::getInput(string input) {
     userInput = input;
     return;
 }
 
-// pushes command into Commands vector
+
 void RShellContainer::addCommand(Command * command) {
     Commands.push_back(command);
     return;
 }
 
-// pushes connect into Connectors vector
+
 void RShellContainer::addConnector(Connector * connect) {
     Connectors.push_back(connect);
     return;
 }
 
 
-// Parse userInput into a commands vector and a connectors vector
+
 void RShellContainer::parse() {
-    string tempStr;                                                             // holds string blocks between connectors and edges
+    string tempStr;                                                            
     
-    if (userInput.length() == 0) {                                              // if empty input string
+    if (userInput.length() == 0) {                                            
         return;
     }
     
-    char * cstrUserInput = new char [userInput.length() + 1];                   // + 1 for \0 (null character)
-    strcpy(cstrUserInput, userInput.c_str());                                   // convert input string to cstring
+    char* cstrUserInput = new char [userInput.length() + 1];                   
+    strcpy(cstrUserInput, userInput.c_str());                                   
     
-    char * token = strtok(cstrUserInput, ";|&#");                               // seperates string blocks from Connector symbols
+    char* token = strtok(cstrUserInput, ";|&#");                               
     
-    while (token != NULL) {                                                     // creates a Command using token and 
-        addCommand(new Command(token));                                         // pushes it onto Command Vector
+    while (token != NULL) {                                                    
+        addCommand(new Command(token));                                        
         token = strtok(NULL, ";|&#");
     }
     
     unsigned itr = 0;
-    bool mult = false;                                                          // determines if there will be two connects in series
+    bool mult = false;                                                         
     while (itr < userInput.length()) {
         if ((itr + 1) >= userInput.length()) {}
         else if (userInput[itr] == ';' && !mult) {
@@ -79,34 +79,33 @@ void RShellContainer::parse() {
         itr++;
     }
     
-    if ((Commands.size() - Connectors.size()) != 1) {                           // Commands should have one more element than Connectors
+    if ((Commands.size() - Connectors.size()) != 1) {                           
         perror("Error: Incorrect number of commands to connects.\n");
     }
     
-    for (unsigned int i = 0; i < Commands.size(); i++) {                        // parses each element in Commands Vector
+    for (unsigned int i = 0; i < Commands.size(); i++) {                       
         Commands.at(i)->parse();
     }
     
     return;
 }
 
-// executes Commands in Commands vector
-void RShellContainer::execute() {                                               // executes all Commands within Commands vector
-    if (Commands.size() == 0) {                                                 // using Connectors vector to determine if a
-        return;                                                                 // Command will run
+void RShellContainer::execute() {                                               
+    if (Commands.size() == 0) {                                                 
+        return;                                                                
     }
     
-    pass = true;                                                        // bool to determine if next Command will run or not
+    pass = true;                                                       
     
     for (unsigned i = 0; i < Commands.size(); i++) {
         
-        // fork process
+        
         if (pass) {
             Commands.at(i)->execute();
             
         }
         
-        // change cntPass depending on whether command passed and connector
+        
         if (Connectors.size() > i) {
             if (Connectors.at(i)->getType() == ";") {
                 pass = true;
@@ -134,19 +133,19 @@ void RShellContainer::execute() {                                               
     }
 }
 
-// clears Commands and Connectors vectors. ERROR WITH FUNCTION FIX ASAP
+
 void RShellContainer::clear() {
     Commands.clear();
     Connectors.clear();
     return;
 }
 
-// outputs userInput string
+
 void RShellContainer::printInput() {
     cout << "RShellContainer::PrintInput(): " << userInput << endl;
 }
 
-// outputs each Command in Commands vector using Command::printInput()
+
 void RShellContainer::printCommandsInput() {
     cout << "RShellContainer::PrintCommandsInput(): " << endl;
     
@@ -160,7 +159,7 @@ void RShellContainer::printCommandsInput() {
     return;
 }
 
-// outputs each Connector in Connectors vector using Connector::printInput()
+
 void RShellContainer::printConnectors() {
     cout << "RShellContainer::PrintConnectors(): " << endl;
     
@@ -173,7 +172,7 @@ void RShellContainer::printConnectors() {
     }
 }
 
-// outputs each argument of each Command in Commands vector using Command::printArgs()
+
 void RShellContainer::printCommandsArgs() {
     cout << "RShellContainer::PrintCommandsArgs(): " << endl;
     

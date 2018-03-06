@@ -1,4 +1,5 @@
 #include "command.hh"
+
 #include <string>
 #include <cstring>
 #include <iostream>
@@ -27,7 +28,7 @@ void Command::execute () {
         pass = false;
         pid_t pid = fork();
     
-        if (pid < 0) {                                                      // fork failed
+        if (pid < 0) {                                          
                perror("Fork() failed.");
            }
         else if (pid == 0) {
@@ -41,21 +42,19 @@ void Command::execute () {
             pass = true;
         }
     } else {
-        //cout << "1" << endl;
+    
         if(arguments.size() > 2) {
-            //cout << "2" << endl;
+   
             string s = arguments.at(2);
             char* uI = new char[arguments.at(2).size() + 1];
             strcpy(uI, s.c_str());
-            //cout << "3" << endl;
-	    //this->printArgs();
-	    //cout << uI << endl;
+      
             if(stat(uI, &buf) == -1){
-		//cout << "4" << endl;
+	
                 cout << "(FALSE)" << endl;
                 cout << "Path not found" << endl;     
             } else {
-		//cout << "5" << endl;
+		
                 if((arguments.at(1) == "-f") && ((buf.st_mode & S_IFMT) == S_IFREG)){
                     cout << "(TRUE)" << endl;
                     pass = true;
@@ -76,12 +75,12 @@ void Command::execute () {
     }
 }
 
-// sets userInput to input
+
 void Command::setInput(string input) {
     userInput = input;
 }
 
-// separates string by spaces and places each string block into a vector and char * array
+
 void Command::parse() {
     
     if (userInput.size() < 1) {
@@ -96,9 +95,9 @@ void Command::parse() {
     
     userInput = userInput.substr(begin, size);
     
-    char * cstrUserInput = new char [userInput.length() + 1];
+    char* cstrUserInput = new char [userInput.length() + 1];
     strcpy(cstrUserInput, userInput.c_str());
-    char * token = strtok(cstrUserInput, " ");
+    char* token = strtok(cstrUserInput, " ");
     
     while (token != NULL) {
         arguments.push_back(token);
@@ -112,7 +111,7 @@ void Command::parse() {
     
     if(arguments.at(i) == "test"){
         testType = true;
-        //cout << "found test" << endl;
+  
     }
     else if(end != std::string::npos){
         i = arguments.size() - 1;
@@ -120,27 +119,27 @@ void Command::parse() {
         
         if(end != std::string::npos){
             testType = true;
-            //cout << "found test" << endl;
+       
         }
         else {
             testType = false;
-            //cout << "no test found" << endl;
+          
         }
     }
     else {
         testType = false;
-        //cout << "no test" << endl;
+
     }
 
     return;
 }
 
-// outputs userInput
+
 void Command::printInput() {
     cout << "Command::printInput(): " << userInput << endl;
 }
 
-// outputs arguments vector
+
 void Command::printArgs() {
     for (unsigned int i = 0; i < arguments.size(); i++) {
         cout << "Command::printArgs(): " << arguments.at(i) << endl;
@@ -148,39 +147,37 @@ void Command::printArgs() {
     return;
 }
 
-// returns userInput
+
 string Command::getInput() {
     return userInput;
 }
 
-// returns arguments vector
+
 vector<string> Command::getArgs() {
     return arguments;
 }
 
-// returns char * array
+
 char ** Command::getArr() {
     return argArr;
 }
 
-// sets pass to true
+
 void Command::passed() {
     pass = true;
     return;
 }
 
-// sets pass to false
 void Command::failed() {
     pass = false;
     return;
 }
 
-// returns pass
+
 bool Command::getPass() {
     return pass;
 }
 
-//return testType
 bool Command::isTest() {
     return testType;
 }

@@ -16,8 +16,11 @@ succeeds and 1 (FALSE) if the test fails. This command is very useful for writin
 can be combined with &amp;&amp; and || to write more complex bash command structures.
 
 -e checks if the file/directory exists
+
 -f checks if the file/directory exists and is a regular file
+
 -d checks if the file/directory exists and is a directory
+
 
 some features of echo with AND, OR
 

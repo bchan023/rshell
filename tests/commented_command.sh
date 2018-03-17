@@ -1,5 +1,3 @@
-#!/bin/sh
-./bin/rshell
 echo this should echo # and this should not
 ls -l; ls # -l; ls -l
 ls && echo foobar #asdf

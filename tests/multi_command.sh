@@ -1,5 +1,3 @@
-#!/bin/sh
-./bin/rshell
 ls -l && echo hello world!; mkdir multCmds || ls -l
 ls -l || ls -a && echo hello world! || echo world! hello
 echo hello; echo world; echo !

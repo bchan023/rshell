@@ -1,9 +1,4 @@
-#!/bin/sh
-./bin/rshell
-echo exit test1
-test -e exit; ls -l
-[ exit ]
-test -e ./nofile && exit
-ls && echo foobar || exit
-echo foobar && exit && echo foobar
-echo should not echo
+echo testing exit command || exit
+(echo this && echo that) || exit
+ls; echo exit; #exit
+echo end of test && exit

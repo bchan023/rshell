@@ -1,19 +1,12 @@
-CC = g++
-CFLAGS = -Wall -Werror -ansi -pedantic
-DEBUG = $(CFLAGS) += -ggdb
-
-all: main rshell command connector rshellcontainer
+CFLAGS=-Wall -g -Werror -ansi -pedantic -std=c++11
+EXEC=rshell
+FINEXEC=bin/rshell
+all:rshell
 	mkdir -p bin
-	$(CC) $(CFLAGS) main.o rshell.o command.o connector.o rshellcontainer.o -o ./bin/rshell
-main:
-	$(CC) $(CFLAGS) -c ./src/main.cpp
+	mv $(EXEC) $(FINEXEC)
+
 rshell:
-	$(CC) $(CFLAGS) -c ./src/rshell.cc
-command:
-	$(CC) $(CFLAGS) -c ./src/command.cc
-connector:
-	$(CC) $(CFLAGS) -c ./src/connector.cc
-rshellcontainer:
-	$(CC) $(CFLAGS) -c ./src/rshellcontainer.cc
+	g++ $(CFLAGS) src/*.cpp -o  $(EXEC)
+
 clean:
-	rm -r *.o
+	rm -r -f bin
